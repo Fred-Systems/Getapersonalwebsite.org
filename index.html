@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon: Unicode Pawn (♟) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♟</text></svg>">
+    
+    <!-- Primary Meta Tags -->
+    <title>ChessPortfolio | Elite Chess Specialist & Player</title>
+    <meta name="title" content="ChessPortfolio | Elite Chess Specialist & Player">
+    <meta name="description" content="Official portfolio of ChessPortfolio, a top-tier chess specialist. Explore career stats, legendary victories, and professional inquiries for tournaments and coaching.">
+    <meta name="keywords" content="ChessPortfolio, Chess Specialist, Chess Player Portfolio, Grandmaster Slayer, Online Chess Legend, Competitive Chess">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="author" content="ChessPortfolio">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ChessPortfolio | Elite Chess Specialist">
+    <meta property="og:description" content="Official portfolio of ChessPortfolio. Top 1% Global Ranking with a storied career in competitive chess.">
+
+    <!-- Advanced Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ChessPortfolio",
+      "url": "https://chess-portfolio.com",
+      "logo": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♟</text></svg>",
+      "description": "ChessPortfolio represents an elite online chess specialist recognized for a top 1% global ranking and a career spanning over 10,000 games.",
+      "knowsAbout": ["Chess", "Competitive Strategy", "Tactical Analysis"]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #0f1115;
+            --accent: #1e2329;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: #e5e7eb;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        .gold-text { color: var(--gold); }
+
+        .nav-glass {
+            background: rgba(15, 17, 21, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .hero-pattern {
+            background-image: radial-gradient(circle at 2px 2px, rgba(212, 175, 55, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+            transition: background-position 0.2s ease-out;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.3; /* Slightly increased overall opacity */
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 17, 21, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .chess-gradient {
+            background: linear-gradient(135deg, #1e2329 0%, #0f1115 100%);
+        }
+
+        .stat-card {
+            background: rgba(30, 35, 41, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            width: 100%;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: scroll 40s linear infinite;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        .game-link {
+            flex-shrink: 0;
+            margin: 0 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .game-link:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 640px) {
+            .hero-title { font-size: 3.5rem; line-height: 1.1; }
+            .nav-glass { padding: 0.5rem 0; }
+        }
+    </style>
+</head>
+<body class="hero-pattern" id="body-pattern">
+
+    <!-- Floating Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 nav-glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <div class="text-xl sm:text-2xl font-bold tracking-tighter uppercase shrink-0">
+                    Chess<span class="gold-text">Portfolio</span>
+                </div>
+            </div>
+            <div class="hidden lg:flex space-x-8 text-sm uppercase tracking-widest font-semibold">
+                <a href="#about" class="hover:text-[#d4af37] transition">The Player</a>
+                <a href="#career" class="hover:text-[#d4af37] transition">Stats</a>
+                <a href="#slayer" class="hover:text-[#d4af37] transition">Giant Slayer</a>
+                <a href="#contact" class="hover:text-[#d4af37] transition">Contact</a>
+            </div>
+            <button onclick="document.getElementById('contact').scrollIntoView()" class="border border-[#d4af37] px-4 sm:px-6 py-2 text-[10px] sm:text-xs uppercase tracking-widest hover:bg-[#d4af37] hover:text-black transition font-bold whitespace-nowrap rounded-sm">
+                Book Session
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center pt-32 pb-16 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1 text-center md:text-left">
+                <span class="gold-text uppercase tracking-[0.3em] text-xs sm:text-sm font-bold mb-4 block">Elite Chess Specialist</span>
+                <h1 class="hero-title text-5xl md:text-8xl font-black mb-6 leading-tight">
+                    A Game Like <br><span class="italic underline decoration-[#d4af37] decoration-4">No Other.</span>
+                </h1>
+                <p class="text-gray-400 text-base sm:text-lg mb-10 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                    <strong>ChessPortfolio</strong> represents a pinnacle of competitive tactical play. As a top-tier global competitor, the focus is on clinical precision forged through thousands of battles against the world's most elite minds.
+                </p>
+                <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start">
+                    <a href="#career" class="bg-[#d4af37] text-black px-8 py-4 font-bold rounded-sm hover:bg-yellow-500 transition shadow-lg text-center text-sm uppercase tracking-widest">View Stats</a>
+                    <a href="#contact" class="bg-transparent border border-gray-700 px-8 py-4 font-bold rounded-sm hover:border-[#d4af37] transition text-white text-center text-sm uppercase tracking-widest">Inquire</a>
+                </div>
+            </div>
+            <div class="order-1 md:order-2 relative flex justify-center">
+                <div class="w-64 h-64 sm:w-80 sm:h-80 md:w-full md:max-w-md aspect-square chess-gradient rounded-full flex items-center justify-center border-4 border-[#1e2229] relative overflow-hidden group">
+                    <svg class="w-2/3 h-2/3 text-[#d4af37] opacity-80 group-hover:scale-110 transition duration-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 22H5V20H19V22ZM17 19H7V17H17V19ZM15 16H9L10 9H14L15 16ZM12 2C10.9 2 10 2.9 10 4C10 4.6 10.3 5.1 10.7 5.5L10 8H14L13.3 5.5C13.7 5.1 14 4.6 14 4C14 2.9 13.1 2 12 2Z" fill="currentColor"/>
+                    </svg>
+                    <div class="absolute bottom-4 right-4 sm:bottom-10 sm:right-10 bg-black p-3 sm:p-4 border border-[#d4af37] rounded-lg shadow-2xl animate-pulse text-center">
+                        <div class="text-[10px] uppercase text-gray-500 font-bold">Global Rank</div>
+                        <div class="text-lg sm:text-xl font-bold gold-text">Top 1%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE GAME FEED (MOCK ARCHIVE) -->
+    <section class="py-12 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="border-y border-gray-800 py-10">
+                <div class="text-center mb-6">
+                    <h3 class="text-xl font-bold gold-text uppercase tracking-widest mb-1">Recent Victories</h3>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-tighter">Verified Competitive Archive</p>
+                </div>
+                <div class="marquee-container">
+                    <div id="game-feed" class="marquee-content">
+                        <!-- Links directed to Chess.com Homepage -->
+                        <a href="https://www.chess.com" target="_blank" class="game-link border border-gray-800 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition flex items-center space-x-3 bg-[#0f1115]">
+                            <span class="bg-[#d4af37] text-black px-2 py-0.5 rounded text-[8px]">WIN</span><span class="text-white">vs GM_Slayer2024</span>
+                        </a>
+                        <a href="https://www.chess.com" target="_blank" class="game-link border border-gray-800 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition flex items-center space-x-3 bg-[#0f1115]">
+                            <span class="bg-[#d4af37] text-black px-2 py-0.5 rounded text-[8px]">WIN</span><span class="text-white">vs BlitzMaster_Pro</span>
+                        </a>
+                        <a href="https://www.chess.com" target="_blank" class="game-link border border-gray-800 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition flex items-center space-x-3 bg-[#0f1115]">
+                            <span class="bg-[#d4af37] text-black px-2 py-0.5 rounded text-[8px]">WIN</span><span class="text-white">vs International_M</span>
+                        </a>
+                        <a href="https://www.chess.com" target="_blank" class="game-link border border-gray-800 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition flex items-center space-x-3 bg-[#0f1115]">
+                            <span class="bg-[#d4af37] text-black px-2 py-0.5 rounded text-[8px]">WIN</span><span class="text-white">vs KingSlayer_99</span>
+                        </a>
+                        <a href="https://www.chess.com" target="_blank" class="game-link border border-gray-800 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition flex items-center space-x-3 bg-[#0f1115]">
+                            <span class="bg-[#d4af37] text-black px-2 py-0.5 rounded text-[8px]">WIN</span><span class="text-white">vs TacticalMind</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="career" class="py-20 bg-[#0a0c0e]">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-center text-xl sm:text-2xl uppercase tracking-[0.4em] gold-text mb-12 sm:mb-16 font-bold">The Digital Record</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center border-b border-gray-800 pb-8 sm:border-0 sm:pb-0">
+                    <div class="text-4xl md:text-5xl font-bold gold-text mb-2">10,000+</div>
+                    <div class="text-gray-500 uppercase tracking-widest text-xs">Total Games Played</div>
+                </div>
+                <div class="text-center border-b border-gray-800 pb-8 sm:border-0 sm:pb-0">
+                    <div class="text-4xl md:text-5xl font-bold gold-text mb-2">ELITE</div>
+                    <div class="text-gray-500 uppercase tracking-widest text-xs">Tactical Specialist</div>
+                </div>
+                <div class="text-center border-b border-gray-800 pb-8 sm:border-0 sm:pb-0">
+                    <div class="text-4xl md:text-5xl font-bold gold-text mb-2">Top 1%</div>
+                    <div class="text-gray-500 uppercase tracking-widest text-xs">Global Ranking</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-bold gold-text mb-2">∞</div>
+                    <div class="text-gray-500 uppercase tracking-widest text-xs">Intuition</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 sm:py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row gap-12 md:gap-16">
+                <div class="md:w-1/3 text-center md:text-left">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-6">Instinctive <br><span class="gold-text">Undefeated.</span></h2>
+                    <p class="text-gray-400 mb-6 italic text-sm leading-relaxed max-w-md mx-auto md:mx-0">"The journey began in early childhood. This lack of a formal FIDE title isn't a reflection of strength, but a result of a purely digital path: a master of the online arena's most competitive environments."</p>
+                    <div class="h-1 w-20 bg-[#d4af37] mx-auto md:mx-0"></div>
+                </div>
+                <div class="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div class="p-8 card-hover rounded-lg text-center sm:text-left">
+                        <i class="fas fa-brain text-3xl gold-text mb-6" aria-hidden="true"></i>
+                        <h3 class="text-xl font-bold mb-4">Lifelong Instinct</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Through decades of play, a level of pattern recognition has been developed that can't be taught. Moves aren't just calculated; they are felt in the heat of battle.</p>
+                    </div>
+                    <div class="p-8 card-hover rounded-lg text-center sm:text-left">
+                        <i class="fas fa-stopwatch text-3xl gold-text mb-6" aria-hidden="true"></i>
+                        <h3 class="text-xl font-bold mb-4">Tactical Mastery</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Where others freeze under the pressure of competition, this specialist thrives. Deep focus and sharp intuition allow for finding winning combinations in any format.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Giant Slayer Section -->
+    <section id="slayer" class="py-20 sm:py-24 bg-[#0a0c0e]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4 uppercase tracking-tighter">Giant <span class="gold-text">Slayer</span></h2>
+                <p class="text-gray-500 max-w-2xl mx-auto px-4">In the competitive arena, titles don't win games—moves do. ChessPortfolio has consistently defeated titled Grandmasters and International Masters across various formats.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                <div class="stat-card p-6 rounded text-center">
+                    <div class="text-[#d4af37] text-xl sm:text-2xl font-bold mb-2">Grandmasters</div>
+                    <p class="text-gray-400 text-xs sm:text-sm italic">"Defeated in high-stakes matches"</p>
+                </div>
+                <div class="stat-card p-6 rounded text-center">
+                    <div class="text-[#d4af37] text-xl sm:text-2xl font-bold mb-2">International Masters</div>
+                    <p class="text-gray-400 text-xs sm:text-sm italic">"Outplayed in complex endgames"</p>
+                </div>
+                <div class="stat-card p-6 rounded text-center">
+                    <div class="text-[#d4af37] text-xl sm:text-2xl font-bold mb-2">FIDE Masters</div>
+                    <p class="text-gray-400 text-xs sm:text-sm italic">"Systematically dismantled via tactics"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 sm:py-32 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl sm:text-5xl font-bold mb-8">Work with <span class="gold-text">The Specialist.</span></h2>
+            <p class="text-gray-400 mb-12 text-base sm:text-lg px-4">
+                Now accepting inquiries for tournament appearances, league play, exhibition matches, and coaching. Witness elite online mastery transition to the professional stage.
+            </p>
+            
+            <form id="portfolio-form" action="https://formspree.io/f/xeeoyzvb" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                <div class="flex flex-col">
+                    <label for="full-name" class="text-[10px] uppercase text-gray-500 mb-2 font-bold tracking-widest">Name</label>
+                    <input type="text" id="full-name" name="name" required class="bg-[#1a1d23] border border-gray-800 p-4 focus:border-[#d4af37] outline-none text-white rounded-sm text-sm">
+                </div>
+                <div class="flex flex-col">
+                    <label for="email-address" class="text-[10px] uppercase text-gray-500 mb-2 font-bold tracking-widest">Email Address</label>
+                    <input type="email" id="email-address" name="email" required class="bg-[#1a1d23] border border-gray-800 p-4 focus:border-[#d4af37] outline-none text-white rounded-sm text-sm">
+                </div>
+                <div class="md:col-span-2 flex flex-col">
+                    <label for="inquiry-type" class="text-[10px] uppercase text-gray-500 mb-2 font-bold tracking-widest">Inquiry Type</label>
+                    <div class="relative">
+                        <select id="inquiry-type" name="inquiry_type" class="w-full bg-[#1a1d23] border border-gray-800 p-4 focus:border-[#d4af37] outline-none text-white rounded-sm text-sm appearance-none cursor-pointer">
+                            <option value="Website Development" selected>Custom Website Development</option>
+                            <option value="Coaching">Coaching</option>
+                            <option value="Tournament">Tournament Invitation</option>
+                            <option value="Exhibition">Exhibition Match</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 text-xs">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-2 flex flex-col">
+                    <label for="message" class="text-[10px] uppercase text-gray-500 mb-2 font-bold tracking-widest">Message</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Describe your request..." required class="bg-[#1a1d23] border border-gray-800 p-4 focus:border-[#d4af37] outline-none text-white rounded-sm text-sm"></textarea>
+                </div>
+                <button type="submit" class="md:col-span-2 bg-[#d4af37] text-black font-bold py-4 uppercase tracking-widest hover:bg-yellow-500 transition text-sm rounded-sm">Submit Request</button>
+            </form>
+
+            <!-- New CTA for Website Creation -->
+            <div class="mt-20 p-8 border border-gray-800 rounded-lg bg-[#0a0c0e]">
+                <h3 class="text-xl font-bold mb-4">Want a website like this?</h3>
+                <p class="text-gray-400 text-sm mb-4 max-w-2xl mx-auto">
+                    I specialize in building high-performance, premium landing pages for athletes, professionals, and businesses across all industries. Select <strong>"Custom Website Development"</strong> in the form above to start your project.
+                </p>
+                <!-- Demo Disclaimer -->
+                <p class="text-gray-600 text-[10px] uppercase tracking-widest mb-6 font-semibold leading-relaxed">
+                    Note: This is a demo profile. In a production site, all personal links (Chess.com profile, social media), live game APIs, and real-time statistics would be fully synchronized and operational.
+                </p>
+                <div class="flex items-center justify-center space-x-6 opacity-40 grayscale">
+                    <i class="fas fa-code text-lg"></i>
+                    <i class="fas fa-palette text-lg"></i>
+                    <i class="fas fa-mobile-alt text-lg"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-900 px-6 text-center">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-gray-600 text-[10px] sm:text-xs">
+            <div class="font-bold uppercase tracking-widest mb-6 md:mb-0 text-sm sm:text-base">Chess<span class="text-gray-400">Portfolio</span></div>
+            
+            <!-- Knight Link Active -->
+            <div class="flex space-x-8 text-3xl mb-8 md:mb-0">
+                <a href="https://www.chess.com" target="_blank" class="text-gray-700 hover:text-[#d4af37] transition-colors duration-300" title="Visit Chess.com">
+                    <i class="fas fa-chess-knight"></i>
+                </a>
+            </div>
+            
+            <div class="tracking-widest">&copy; <span id="year"></span> ChessPortfolio | Elite Strategic Play.</div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Canvas Background logic
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let pieces = [];
+        const pieceIcons = ['♟', '♞', '♝', '♜', '♛', '♚'];
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            pieces = [];
+            // Reduced count on mobile for performance
+            const count = window.innerWidth < 640 ? 10 : 20;
+            for (let i = 0; i < count; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 40 + 20, // Increased size for visibility
+                    text: pieceIcons[Math.floor(Math.random() * pieceIcons.length)],
+                    speed: Math.random() * 0.4 + 0.1,
+                    opacity: Math.random() * 0.5 + 0.2 // Increased opacity for visibility
+                });
+            }
+        }
+
+        function drawBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#d4af37";
+            pieces.forEach(p => {
+                ctx.globalAlpha = p.opacity;
+                ctx.font = `${p.size}px serif`;
+                ctx.fillText(p.text, p.x, p.y);
+                p.y -= p.speed;
+                if (p.y < -50) p.y = canvas.height + 50;
+            });
+            requestAnimationFrame(drawBackground);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        drawBackground();
+
+        // Hover Effect
+        const body = document.getElementById('body-pattern');
+        window.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 1024) { // Only on desktop
+                const moveX = (e.clientX / window.innerWidth) * 20;
+                const moveY = (e.clientY / window.innerHeight) * 20;
+                body.style.backgroundPosition = `${moveX}px ${moveY}px`;
+            }
+        });
+
+        // Initialize Marquee Loop
+        window.addEventListener('load', () => {
+            const feedContainer = document.getElementById('game-feed');
+            const clones = feedContainer.innerHTML;
+            feedContainer.innerHTML += clones + clones + clones;
+        });
+    </script>
+</body>
+</html>
